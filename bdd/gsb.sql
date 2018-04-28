@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Client :  127.0.0.1
--- Généré le :  Ven 20 Avril 2018 à 15:33
--- Version du serveur :  5.7.14
--- Version de PHP :  5.6.25
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  sam. 28 avr. 2018 à 18:49
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,16 +28,17 @@ SET time_zone = "+00:00";
 -- Structure de la table `coefficient`
 --
 
-CREATE TABLE `coefficient` (
-  `pra_coefnotoriete` int(11) NOT NULL
+DROP TABLE IF EXISTS `coefficient`;
+CREATE TABLE IF NOT EXISTS `coefficient` (
+  `pra_coefnotoriete` int(11) NOT NULL,
+  PRIMARY KEY (`pra_coefnotoriete`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `coefficient`
+-- Déchargement des données de la table `coefficient`
 --
 
 INSERT INTO `coefficient` (`pra_coefnotoriete`) VALUES
-(0),
 (1),
 (2),
 (3),
@@ -48,16 +51,19 @@ INSERT INTO `coefficient` (`pra_coefnotoriete`) VALUES
 -- Structure de la table `comptable`
 --
 
-CREATE TABLE `comptable` (
+DROP TABLE IF EXISTS `comptable`;
+CREATE TABLE IF NOT EXISTS `comptable` (
   `Id_Comptable` char(4) NOT NULL,
   `nom` varchar(30) DEFAULT NULL,
   `prenom` varchar(30) DEFAULT NULL,
   `login` varchar(50) DEFAULT NULL,
-  `mdp` varchar(50) DEFAULT NULL
+  `mdp` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`Id_Comptable`),
+  UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `comptable`
+-- Déchargement des données de la table `comptable`
 --
 
 INSERT INTO `comptable` (`Id_Comptable`, `nom`, `prenom`, `login`, `mdp`) VALUES
@@ -69,18 +75,20 @@ INSERT INTO `comptable` (`Id_Comptable`, `nom`, `prenom`, `login`, `mdp`) VALUES
 -- Structure de la table `delegue`
 --
 
-CREATE TABLE `delegue` (
+DROP TABLE IF EXISTS `delegue`;
+CREATE TABLE IF NOT EXISTS `delegue` (
   `del_matricule` varchar(255) NOT NULL,
   `del_nom` varchar(255) NOT NULL,
   `del_prenom` varchar(255) NOT NULL,
   `del_adresse` varchar(255) NOT NULL,
   `del_ville` varchar(255) NOT NULL,
   `del_cp` int(11) NOT NULL,
-  `del_mdp` varchar(255) NOT NULL
+  `del_mdp` varchar(255) NOT NULL,
+  PRIMARY KEY (`del_matricule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `delegue`
+-- Déchargement des données de la table `delegue`
 --
 
 INSERT INTO `delegue` (`del_matricule`, `del_nom`, `del_prenom`, `del_adresse`, `del_ville`, `del_cp`, `del_mdp`) VALUES
@@ -92,13 +100,15 @@ INSERT INTO `delegue` (`del_matricule`, `del_nom`, `del_prenom`, `del_adresse`, 
 -- Structure de la table `etat`
 --
 
-CREATE TABLE `etat` (
+DROP TABLE IF EXISTS `etat`;
+CREATE TABLE IF NOT EXISTS `etat` (
   `id` char(2) NOT NULL,
-  `libelle` varchar(30) DEFAULT NULL
+  `libelle` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `etat`
+-- Déchargement des données de la table `etat`
 --
 
 INSERT INTO `etat` (`id`, `libelle`) VALUES
@@ -113,17 +123,18 @@ INSERT INTO `etat` (`id`, `libelle`) VALUES
 -- Structure de la table `famille`
 --
 
-CREATE TABLE `famille` (
+DROP TABLE IF EXISTS `famille`;
+CREATE TABLE IF NOT EXISTS `famille` (
   `fam_code` varchar(250) NOT NULL,
-  `fam_libelle` varchar(250) NOT NULL
+  `fam_libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`fam_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `famille`
+-- Déchargement des données de la table `famille`
 --
 
 INSERT INTO `famille` (`fam_code`, `fam_libelle`) VALUES
-('0', 'Antihistaminique H1 local'),
 ('1', 'Corticoïde, antibiotique et antifongique à usage local'),
 ('2', 'Antibiotique de la famille des béta-lactamines '),
 ('3', 'Antibiotique urinaire minute'),
@@ -131,7 +142,8 @@ INSERT INTO `famille` (`fam_code`, `fam_libelle`) VALUES
 ('5', 'Antidépresseur d\'action centrale'),
 ('6', 'Psychostimulant, antiasthénique'),
 ('7', 'Antalgique antipyrétiques en association'),
-('8', 'Antibiotique local (ORL)');
+('8', 'Antibiotique local (ORL)'),
+('9', 'Antihistaminique H1 local');
 
 -- --------------------------------------------------------
 
@@ -139,18 +151,21 @@ INSERT INTO `famille` (`fam_code`, `fam_libelle`) VALUES
 -- Structure de la table `fichefrais`
 --
 
-CREATE TABLE `fichefrais` (
+DROP TABLE IF EXISTS `fichefrais`;
+CREATE TABLE IF NOT EXISTS `fichefrais` (
   `idVisiteur` char(4) NOT NULL,
   `mois` char(6) NOT NULL,
   `nbJustificatifs` int(11) DEFAULT NULL,
   `montantValide` decimal(10,2) DEFAULT NULL,
   `dateModif` date DEFAULT NULL,
   `idEtat` char(2) DEFAULT 'CR',
-  `libelleEtat` varchar(30) DEFAULT NULL
+  `libelleEtat` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`idVisiteur`,`mois`),
+  KEY `idEtat` (`idEtat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `fichefrais`
+-- Déchargement des données de la table `fichefrais`
 --
 
 INSERT INTO `fichefrais` (`idVisiteur`, `mois`, `nbJustificatifs`, `montantValide`, `dateModif`, `idEtat`, `libelleEtat`) VALUES
@@ -166,14 +181,16 @@ INSERT INTO `fichefrais` (`idVisiteur`, `mois`, `nbJustificatifs`, `montantValid
 -- Structure de la table `fraisforfait`
 --
 
-CREATE TABLE `fraisforfait` (
+DROP TABLE IF EXISTS `fraisforfait`;
+CREATE TABLE IF NOT EXISTS `fraisforfait` (
   `id` char(3) NOT NULL,
   `libelle` char(20) DEFAULT NULL,
-  `montant` decimal(5,2) DEFAULT NULL
+  `montant` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `fraisforfait`
+-- Déchargement des données de la table `fraisforfait`
 --
 
 INSERT INTO `fraisforfait` (`id`, `libelle`, `montant`) VALUES
@@ -188,11 +205,13 @@ INSERT INTO `fraisforfait` (`id`, `libelle`, `montant`) VALUES
 -- Structure de la table `justificatif`
 --
 
-CREATE TABLE `justificatif` (
-  `IdJustificatif` int(11) NOT NULL,
+DROP TABLE IF EXISTS `justificatif`;
+CREATE TABLE IF NOT EXISTS `justificatif` (
+  `IdJustificatif` int(11) NOT NULL AUTO_INCREMENT,
   `idVisiteur` varchar(10) NOT NULL,
   `mois` int(11) NOT NULL,
-  `Chemin` varchar(50) NOT NULL
+  `Chemin` varchar(50) NOT NULL,
+  PRIMARY KEY (`IdJustificatif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -201,15 +220,18 @@ CREATE TABLE `justificatif` (
 -- Structure de la table `lignefraisforfait`
 --
 
-CREATE TABLE `lignefraisforfait` (
+DROP TABLE IF EXISTS `lignefraisforfait`;
+CREATE TABLE IF NOT EXISTS `lignefraisforfait` (
   `idVisiteur` char(4) NOT NULL,
   `mois` char(6) NOT NULL,
   `idFraisForfait` char(3) NOT NULL,
-  `quantite` int(11) DEFAULT NULL
+  `quantite` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idVisiteur`,`mois`,`idFraisForfait`),
+  KEY `idFraisForfait` (`idFraisForfait`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `lignefraisforfait`
+-- Déchargement des données de la table `lignefraisforfait`
 --
 
 INSERT INTO `lignefraisforfait` (`idVisiteur`, `mois`, `idFraisForfait`, `quantite`) VALUES
@@ -240,18 +262,21 @@ INSERT INTO `lignefraisforfait` (`idVisiteur`, `mois`, `idFraisForfait`, `quanti
 -- Structure de la table `lignefraishorsforfait`
 --
 
-CREATE TABLE `lignefraishorsforfait` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `lignefraishorsforfait`;
+CREATE TABLE IF NOT EXISTS `lignefraishorsforfait` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idVisiteur` char(4) NOT NULL,
   `mois` char(6) NOT NULL,
   `libelle` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `montant` decimal(10,2) DEFAULT NULL,
-  `etat` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `etat` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idVisiteur` (`idVisiteur`,`mois`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `lignefraishorsforfait`
+-- Déchargement des données de la table `lignefraishorsforfait`
 --
 
 INSERT INTO `lignefraishorsforfait` (`id`, `idVisiteur`, `mois`, `libelle`, `date`, `montant`, `etat`) VALUES
@@ -293,18 +318,21 @@ INSERT INTO `lignefraishorsforfait` (`id`, `idVisiteur`, `mois`, `libelle`, `dat
 -- Structure de la table `medicament`
 --
 
-CREATE TABLE `medicament` (
+DROP TABLE IF EXISTS `medicament`;
+CREATE TABLE IF NOT EXISTS `medicament` (
   `med_depotlegal` varchar(250) NOT NULL,
   `med_nomcommercial` varchar(250) NOT NULL,
   `fam_code` varchar(250) NOT NULL,
   `med_composition` varchar(250) NOT NULL,
   `med_effets` varchar(250) NOT NULL,
   `med_contreindic` varchar(250) NOT NULL,
-  `med_prixechantillon` int(11) NOT NULL
+  `med_prixechantillon` int(11) NOT NULL,
+  PRIMARY KEY (`med_depotlegal`),
+  KEY `fam_code` (`fam_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `medicament`
+-- Déchargement des données de la table `medicament`
 --
 
 INSERT INTO `medicament` (`med_depotlegal`, `med_nomcommercial`, `fam_code`, `med_composition`, `med_effets`, `med_contreindic`, `med_prixechantillon`) VALUES
@@ -314,7 +342,7 @@ INSERT INTO `medicament` (`med_depotlegal`, `med_nomcommercial`, `fam_code`, `me
 ('BITALV', 'BIVALIC', '7', 'Dextroproxyphène + Paracétamol', 'Ce médicament est utilisé pour traiter les douleurs d\'intensité modérée ou intense.', 'Ce médicament est contre-indiqué en cas d\'allergie aux médicaments de cette famille, d\'insuffisance hépatique ou d\'insuffisance rénale.', 17),
 ('DIMIRTAM6', 'DIMIRTAM', '5', 'Mirtazapine', 'Ce médicament est utilisé pour traiter les épisodes dépressifs sévères.', 'La prise de ce produit est contre-indiquée en cas d\'allergie à l\'un des constituants.', 22),
 ('EVILR7', 'EVEILLOR', '6', 'Adrafinil', 'Ce médicament est utilisé pour traiter les troubles de la vigilance et certains symptomes neurologiques chez le sujet agé.', 'Ce médicament est contre-indiqué en cas d\'allergie à l\'un des constituants.', 23),
-('INSXT5', 'INSECTIL', '0', 'Diphénydramine', 'Ce médicament est utilisé en application locale sur les piqûres d\'insecte et l\'urticaire.', 'Ce médicament est contre-indiqué en cas d\'allergie aux antihistaminiques.', 15),
+('INSXT5', 'INSECTIL', '9', 'Diphénydramine', 'Ce médicament est utilisé en application locale sur les piqûres d\'insecte et l\'urticaire.', 'Ce médicament est contre-indiqué en cas d\'allergie aux antihistaminiques.', 15),
 ('PARMOL16', 'PARMOCODEINE', '4', 'Codéine + Paracétamol', 'Ce médicament est utilisé pour le traitement des douleurs lorsque des antalgiques simples ne sont pas assez efficaces.', 'Ce médicament est contre-indiqué en cas d\'allergie à l\'un des constituants, chez l\'enfant de moins de 15 kg, en cas d\'insuffisance hépatique ou respiratoire, d\'asthme, de phénylcétonurie et chez la femme qui allaite.', 19),
 ('PHYSOI8', 'PHYSICOR', '6', 'Sulbutiamine', 'Ce médicament est utilisé pour traiter les baisses d\'activité physique ou psychique , souvent dans un contexte de dépression.', 'Ce médicament est contre-indiqué en cas d\'allergie à l\'un des constituants.', 15),
 ('URIEG6', 'URIREGUL', '3', 'Fosfomycine trométamol', 'Ce médicament est utilisé pour traiter les infections urinaires simples chez la femme de moins de 65 ans.', 'La prise de ce médicament est contre-indiquée en cas d\'allergie à l\'un des constituants et d\'insuffisance rénale.', 20);
@@ -325,8 +353,9 @@ INSERT INTO `medicament` (`med_depotlegal`, `med_nomcommercial`, `fam_code`, `me
 -- Structure de la table `practicien`
 --
 
-CREATE TABLE `practicien` (
-  `pra_num` int(11) NOT NULL,
+DROP TABLE IF EXISTS `practicien`;
+CREATE TABLE IF NOT EXISTS `practicien` (
+  `pra_num` int(11) NOT NULL AUTO_INCREMENT,
   `pra_nom` varchar(250) NOT NULL,
   `pra_prenom` varchar(250) NOT NULL,
   `pra_adresse` varchar(250) NOT NULL,
@@ -334,18 +363,21 @@ CREATE TABLE `practicien` (
   `pra_ville` varchar(250) NOT NULL,
   `pra_coefnotoriete` int(11) NOT NULL,
   `moyenne` varchar(250) DEFAULT NULL,
-  `typ_code` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `typ_code` varchar(250) NOT NULL,
+  PRIMARY KEY (`pra_num`),
+  KEY `typ_code` (`typ_code`),
+  KEY `pra_coefnotoriete` (`pra_coefnotoriete`)
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `practicien`
+-- Déchargement des données de la table `practicien`
 --
 
 INSERT INTO `practicien` (`pra_num`, `pra_nom`, `pra_prenom`, `pra_adresse`, `pra_cp`, `pra_ville`, `pra_coefnotoriete`, `moyenne`, `typ_code`) VALUES
 (21, 'Houchard', 'Eliane', '9 rue Demolombes', 49100, 'Angers', 3, NULL, '4'),
 (35, 'Leveneur', 'Hugues', '7 place St Gilles', 62000, 'Arras', 1, NULL, '5'),
 (36, 'Mosquet', 'Isabelle', '22 rue Jules Vernes', 76000, 'Rouen', 3, NULL, '7'),
-(41, 'Ain', 'Jean-Pierre', '4 résidence Olympia', 2000, 'Laon', 3, NULL, '0'),
+(41, 'Ain', 'Jean-Pierre', '4 résidence Olympia', 2000, 'Laon', 3, NULL, '10'),
 (53, 'Vittorio', 'Myriam', '3 place Champlain', 94000, 'Boissy-Saint-Leger', 5, NULL, '9'),
 (56, 'Chubilleau', 'Pascal', '3 rue Hastings', 15000, 'Aurillac', 4, NULL, '1'),
 (62, 'Mirouf', 'Patrick', '22 rue Puits Picard', 74000, 'Annecy', 2, NULL, '6'),
@@ -360,8 +392,9 @@ INSERT INTO `practicien` (`pra_num`, `pra_nom`, `pra_prenom`, `pra_adresse`, `pr
 -- Structure de la table `rapport_visite`
 --
 
-CREATE TABLE `rapport_visite` (
-  `rap_num` int(11) NOT NULL,
+DROP TABLE IF EXISTS `rapport_visite`;
+CREATE TABLE IF NOT EXISTS `rapport_visite` (
+  `rap_num` int(11) NOT NULL AUTO_INCREMENT,
   `vis_matricule` int(11) NOT NULL,
   `pra_num` int(11) DEFAULT NULL,
   `rp_num` int(11) DEFAULT NULL,
@@ -370,22 +403,33 @@ CREATE TABLE `rapport_visite` (
   `rap_motif` varchar(500) NOT NULL,
   `pra_coefnotoriete` int(11) NOT NULL,
   `med_depotlegal` varchar(500) NOT NULL,
-  `echantillon` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `echantillon` int(11) NOT NULL,
+  PRIMARY KEY (`rap_num`),
+  KEY `vis_matricule` (`vis_matricule`),
+  KEY `pra_num` (`pra_num`),
+  KEY `med_depotlegal` (`med_depotlegal`),
+  KEY `pra_coefnotoriete` (`pra_coefnotoriete`),
+  KEY `rp_num` (`rp_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=881 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `rapport_visite`
+-- Déchargement des données de la table `rapport_visite`
 --
 
 INSERT INTO `rapport_visite` (`rap_num`, `vis_matricule`, `pra_num`, `rp_num`, `rap_date`, `rap_bilan`, `rap_motif`, `pra_coefnotoriete`, `med_depotlegal`, `echantillon`) VALUES
-(44, 1, 35, 1, '16 April, 2018', 'test', 'test', 5, 'APATOUX22', 5),
-(869, 1, 53, 1, '22 April, 2018', '896', '896', 3, 'PHYSOI8', 896),
-(870, 1, 41, 1, '5 April, 2018', 'ttt', 'ttt', 4, 'PHYSOI8', 8),
-(871, 1, 41, 1, '30 April, 2018', 'azazaz', 'azazaz', 5, 'URIEG6', 5),
-(872, 1, 36, 1, '29 April, 2018', 'tetetete', 'tetetetet', 5, 'APATOUX22', 8),
-(873, 1, 41, 1, '29 April, 2018', '999', '9999', 2, 'PHYSOI8', 999999),
-(874, 1, NULL, 2, '26 April, 2018', 'test', 'test', 4, '3MYC7', 5),
-(875, 1, NULL, 3, '30 April, 2018', 'aa', 'aa', 2, '3MYC7', 5);
+(44, 1, 35, NULL, '16 April, 2018', 'test', 'test', 5, 'APATOUX22', 5),
+(869, 1, 53, NULL, '22 April, 2018', '896', '896', 3, 'PHYSOI8', 896),
+(870, 1, 41, NULL, '5 April, 2018', 'ttt', 'ttt', 4, 'PHYSOI8', 8),
+(871, 1, 41, NULL, '30 April, 2018', 'azazaz', 'azazaz', 5, 'URIEG6', 5),
+(872, 1, 36, NULL, '29 April, 2018', 'tetetete', 'tetetetet', 5, 'APATOUX22', 8),
+(873, 1, 41, NULL, '29 April, 2018', '999', '9999', 2, 'PHYSOI8', 999999),
+(874, 1, NULL, 1, '26 April, 2018', 'test', 'test', 4, '3MYC7', 5),
+(875, 1, NULL, 1, '30 April, 2018', 'aa', 'aa', 2, '3MYC7', 5),
+(876, 1, 35, NULL, '17 April, 2018', 'sfsdfsdf', 'sdfsdfsdf', 3, 'PARMOL16', 596),
+(877, 1, NULL, 2, '22 April, 2018', 'sdfsdf', 'sdfsdfsdf99', 3, 'PHYSOI8', 789),
+(878, 1, NULL, 3, '22 April, 2018', 'mlkjhgf', 'mlkjhgf', 2, 'PARMOL16', 75),
+(879, 1, NULL, 2, '22 April, 2018', 'fghdsq', 'sqdfqsdf', 3, '3MYC7', 4),
+(880, 1, 36, NULL, '24 April, 2018', 'rdgfqs', 'sqdf', 3, 'AMOPIL7', 5);
 
 -- --------------------------------------------------------
 
@@ -393,8 +437,9 @@ INSERT INTO `rapport_visite` (`rap_num`, `vis_matricule`, `pra_num`, `rp_num`, `
 -- Structure de la table `rapport_visite_del`
 --
 
-CREATE TABLE `rapport_visite_del` (
-  `rap_num_del` int(11) NOT NULL,
+DROP TABLE IF EXISTS `rapport_visite_del`;
+CREATE TABLE IF NOT EXISTS `rapport_visite_del` (
+  `rap_num_del` int(11) NOT NULL AUTO_INCREMENT,
   `del_matricule` varchar(255) NOT NULL,
   `pra_num` int(11) DEFAULT NULL,
   `rp_num` int(11) DEFAULT NULL,
@@ -403,11 +448,17 @@ CREATE TABLE `rapport_visite_del` (
   `rap_motif_del` varchar(500) NOT NULL,
   `pra_coefnotoriete` int(11) NOT NULL,
   `med_depotlegal` varchar(255) NOT NULL,
-  `echantillon_del` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `echantillon_del` int(11) NOT NULL,
+  PRIMARY KEY (`rap_num_del`),
+  KEY `med_depotlegal` (`med_depotlegal`),
+  KEY `del_matricule` (`del_matricule`),
+  KEY `pra_num_del` (`pra_num`),
+  KEY `pra_coefnotoriete` (`pra_coefnotoriete`),
+  KEY `rp_num` (`rp_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `rapport_visite_del`
+-- Déchargement des données de la table `rapport_visite_del`
 --
 
 INSERT INTO `rapport_visite_del` (`rap_num_del`, `del_matricule`, `pra_num`, `rp_num`, `rap_date_del`, `rap_bilan_del`, `rap_motif_del`, `pra_coefnotoriete`, `med_depotlegal`, `echantillon_del`) VALUES
@@ -416,7 +467,14 @@ INSERT INTO `rapport_visite_del` (`rap_num_del`, `del_matricule`, `pra_num`, `rp
 (1001, '1', 41, 3, '30 April, 2018', '999', '999', 5, 'URIEG6', 999),
 (1002, '1', 36, 3, '29 April, 2018', 'jjjj', 'jjj', 1, 'URIEG6', 4),
 (1003, '1', 36, 2, '28 April, 2018', '4545', '4545', 4, 'URIEG6', 4545),
-(1004, '1', NULL, 3, '18 April, 2018', 'oo', 'oo', 4, '3MYC7', 1);
+(1004, '1', NULL, 3, '18 April, 2018', 'oo', 'oo', 4, '3MYC7', 1),
+(1005, '1', NULL, 2, '22 April, 2018', '98pmmpmpm', 'pmpmpmp', 3, 'PHYSOI8', 4),
+(1006, '1', 35, NULL, '29 April, 2018', 'pmpmpmpmpmpmpmpm', 'pmpmmpm', 2, 'EVILR7', 4),
+(1007, '1', 35, NULL, '23 April, 2018', 'qwqwqwqw', 'wqqwqw', 2, '3MYC7', 5),
+(1008, '1', 35, NULL, '23 April, 2018', 'azazaza', 'aaaaaa', 1, '3MYC7', 8),
+(1009, '1', NULL, 2, '22 April, 2018', 'ghghghgh', 'ghghghghghg', 1, '3MYC7', 5),
+(1010, '1', NULL, 3, '16 April, 2018', 'ikkikiki', 'kikikik', 3, 'PHYSOI8', 5),
+(1011, '1', NULL, 3, '22 April, 2018', 'fzfzfzf', 'zefzefzef', 4, 'PARMOL16', 6);
 
 -- --------------------------------------------------------
 
@@ -424,17 +482,19 @@ INSERT INTO `rapport_visite_del` (`rap_num_del`, `del_matricule`, `pra_num`, `rp
 -- Structure de la table `remplacant`
 --
 
-CREATE TABLE `remplacant` (
-  `rp_num` int(11) NOT NULL,
+DROP TABLE IF EXISTS `remplacant`;
+CREATE TABLE IF NOT EXISTS `remplacant` (
+  `rp_num` int(11) NOT NULL AUTO_INCREMENT,
   `rp_nom` varchar(250) NOT NULL,
   `rp_prenom` varchar(250) NOT NULL,
   `rp_adresse` varchar(250) NOT NULL,
   `rp_cp` int(11) NOT NULL,
-  `rp_ville` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `rp_ville` varchar(250) NOT NULL,
+  PRIMARY KEY (`rp_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `remplacant`
+-- Déchargement des données de la table `remplacant`
 --
 
 INSERT INTO `remplacant` (`rp_num`, `rp_nom`, `rp_prenom`, `rp_adresse`, `rp_cp`, `rp_ville`) VALUES
@@ -448,18 +508,20 @@ INSERT INTO `remplacant` (`rp_num`, `rp_nom`, `rp_prenom`, `rp_adresse`, `rp_cp`
 -- Structure de la table `responsable`
 --
 
-CREATE TABLE `responsable` (
+DROP TABLE IF EXISTS `responsable`;
+CREATE TABLE IF NOT EXISTS `responsable` (
   `resp_matricule` varchar(255) NOT NULL,
   `resp_nom` varchar(255) NOT NULL,
   `resp_prenom` varchar(255) NOT NULL,
   `resp_adresse` varchar(255) NOT NULL,
   `resp_cp` int(11) NOT NULL,
   `resp_ville` varchar(255) NOT NULL,
-  `resp_mdp` varchar(255) NOT NULL
+  `resp_mdp` varchar(255) NOT NULL,
+  PRIMARY KEY (`resp_matricule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `responsable`
+-- Déchargement des données de la table `responsable`
 --
 
 INSERT INTO `responsable` (`resp_matricule`, `resp_nom`, `resp_prenom`, `resp_adresse`, `resp_cp`, `resp_ville`, `resp_mdp`) VALUES
@@ -471,9 +533,11 @@ INSERT INTO `responsable` (`resp_matricule`, `resp_nom`, `resp_prenom`, `resp_ad
 -- Structure de la table `type_individu`
 --
 
-CREATE TABLE `type_individu` (
+DROP TABLE IF EXISTS `type_individu`;
+CREATE TABLE IF NOT EXISTS `type_individu` (
   `tin_code` varchar(250) NOT NULL,
-  `tin_libelle` varchar(250) NOT NULL
+  `tin_libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`tin_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -482,18 +546,20 @@ CREATE TABLE `type_individu` (
 -- Structure de la table `type_practicien`
 --
 
-CREATE TABLE `type_practicien` (
+DROP TABLE IF EXISTS `type_practicien`;
+CREATE TABLE IF NOT EXISTS `type_practicien` (
   `typ_code` varchar(250) NOT NULL,
-  `typ_libelle` varchar(250) NOT NULL
+  `typ_libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`typ_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `type_practicien`
+-- Déchargement des données de la table `type_practicien`
 --
 
 INSERT INTO `type_practicien` (`typ_code`, `typ_libelle`) VALUES
-('0', 'Médecin Hospitalier'),
 ('1', 'Médecin Généraliste'),
+('10', 'Médecin Hospitalier'),
 ('2', 'Pharmacien Officine'),
 ('3', 'Pharmacien de Garde'),
 ('4', 'Infirmier'),
@@ -509,7 +575,8 @@ INSERT INTO `type_practicien` (`typ_code`, `typ_libelle`) VALUES
 -- Structure de la table `visiteur`
 --
 
-CREATE TABLE `visiteur` (
+DROP TABLE IF EXISTS `visiteur`;
+CREATE TABLE IF NOT EXISTS `visiteur` (
   `id` char(4) NOT NULL,
   `nom` char(30) DEFAULT NULL,
   `prenom` char(30) DEFAULT NULL,
@@ -518,11 +585,12 @@ CREATE TABLE `visiteur` (
   `adresse` char(30) DEFAULT NULL,
   `cp` char(5) DEFAULT NULL,
   `ville` char(30) DEFAULT NULL,
-  `dateEmbauche` date DEFAULT NULL
+  `dateEmbauche` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `visiteur`
+-- Déchargement des données de la table `visiteur`
 --
 
 INSERT INTO `visiteur` (`id`, `nom`, `prenom`, `login`, `mdp`, `adresse`, `cp`, `ville`, `dateEmbauche`) VALUES
@@ -560,8 +628,9 @@ INSERT INTO `visiteur` (`id`, `nom`, `prenom`, `login`, `mdp`, `adresse`, `cp`, 
 -- Structure de la table `visiteur_ppe3`
 --
 
-CREATE TABLE `visiteur_ppe3` (
-  `vis_matricule` int(11) NOT NULL,
+DROP TABLE IF EXISTS `visiteur_ppe3`;
+CREATE TABLE IF NOT EXISTS `visiteur_ppe3` (
+  `vis_matricule` int(11) NOT NULL AUTO_INCREMENT,
   `vis_nom` varchar(250) NOT NULL,
   `vis_prenom` varchar(250) NOT NULL,
   `vis_adresse` varchar(250) NOT NULL,
@@ -570,11 +639,13 @@ CREATE TABLE `visiteur_ppe3` (
   `region` varchar(250) NOT NULL,
   `departement` varchar(250) NOT NULL,
   `secteur` varchar(250) NOT NULL,
-  `vis_dateembauche` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `vis_dateembauche` varchar(255) NOT NULL,
+  PRIMARY KEY (`vis_matricule`),
+  KEY `vis_cp` (`vis_cp`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `visiteur_ppe3`
+-- Déchargement des données de la table `visiteur_ppe3`
 --
 
 INSERT INTO `visiteur_ppe3` (`vis_matricule`, `vis_nom`, `vis_prenom`, `vis_adresse`, `vis_cp`, `vis_ville`, `region`, `departement`, `secteur`, `vis_dateembauche`) VALUES
@@ -590,183 +661,7 @@ INSERT INTO `visiteur_ppe3` (`vis_matricule`, `vis_nom`, `vis_prenom`, `vis_adre
 (10, 'Onfroy', 'Den', '5 rue Sidonie Jacolin', '37', 'Tours', 'Centre-Val de Loire', 'Indre et Loire', 'Paris Centre', '1989-02-14');
 
 --
--- Index pour les tables exportées
---
-
---
--- Index pour la table `coefficient`
---
-ALTER TABLE `coefficient`
-  ADD PRIMARY KEY (`pra_coefnotoriete`);
-
---
--- Index pour la table `comptable`
---
-ALTER TABLE `comptable`
-  ADD PRIMARY KEY (`Id_Comptable`),
-  ADD UNIQUE KEY `login` (`login`);
-
---
--- Index pour la table `delegue`
---
-ALTER TABLE `delegue`
-  ADD PRIMARY KEY (`del_matricule`);
-
---
--- Index pour la table `etat`
---
-ALTER TABLE `etat`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `famille`
---
-ALTER TABLE `famille`
-  ADD PRIMARY KEY (`fam_code`);
-
---
--- Index pour la table `fichefrais`
---
-ALTER TABLE `fichefrais`
-  ADD PRIMARY KEY (`idVisiteur`,`mois`),
-  ADD KEY `idEtat` (`idEtat`);
-
---
--- Index pour la table `fraisforfait`
---
-ALTER TABLE `fraisforfait`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `justificatif`
---
-ALTER TABLE `justificatif`
-  ADD PRIMARY KEY (`IdJustificatif`);
-
---
--- Index pour la table `lignefraisforfait`
---
-ALTER TABLE `lignefraisforfait`
-  ADD PRIMARY KEY (`idVisiteur`,`mois`,`idFraisForfait`),
-  ADD KEY `idFraisForfait` (`idFraisForfait`);
-
---
--- Index pour la table `lignefraishorsforfait`
---
-ALTER TABLE `lignefraishorsforfait`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idVisiteur` (`idVisiteur`,`mois`);
-
---
--- Index pour la table `medicament`
---
-ALTER TABLE `medicament`
-  ADD PRIMARY KEY (`med_depotlegal`),
-  ADD KEY `fam_code` (`fam_code`);
-
---
--- Index pour la table `practicien`
---
-ALTER TABLE `practicien`
-  ADD PRIMARY KEY (`pra_num`),
-  ADD KEY `typ_code` (`typ_code`),
-  ADD KEY `pra_coefnotoriete` (`pra_coefnotoriete`);
-
---
--- Index pour la table `rapport_visite`
---
-ALTER TABLE `rapport_visite`
-  ADD PRIMARY KEY (`rap_num`),
-  ADD KEY `vis_matricule` (`vis_matricule`),
-  ADD KEY `pra_num` (`pra_num`),
-  ADD KEY `med_depotlegal` (`med_depotlegal`),
-  ADD KEY `pra_coefnotoriete` (`pra_coefnotoriete`),
-  ADD KEY `rp_num` (`rp_num`);
-
---
--- Index pour la table `rapport_visite_del`
---
-ALTER TABLE `rapport_visite_del`
-  ADD PRIMARY KEY (`rap_num_del`),
-  ADD KEY `med_depotlegal` (`med_depotlegal`),
-  ADD KEY `del_matricule` (`del_matricule`),
-  ADD KEY `pra_num_del` (`pra_num`),
-  ADD KEY `pra_coefnotoriete` (`pra_coefnotoriete`),
-  ADD KEY `rp_num` (`rp_num`);
-
---
--- Index pour la table `remplacant`
---
-ALTER TABLE `remplacant`
-  ADD PRIMARY KEY (`rp_num`);
-
---
--- Index pour la table `responsable`
---
-ALTER TABLE `responsable`
-  ADD PRIMARY KEY (`resp_matricule`);
-
---
--- Index pour la table `type_individu`
---
-ALTER TABLE `type_individu`
-  ADD PRIMARY KEY (`tin_code`);
-
---
--- Index pour la table `type_practicien`
---
-ALTER TABLE `type_practicien`
-  ADD PRIMARY KEY (`typ_code`);
-
---
--- Index pour la table `visiteur`
---
-ALTER TABLE `visiteur`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `visiteur_ppe3`
---
-ALTER TABLE `visiteur_ppe3`
-  ADD PRIMARY KEY (`vis_matricule`),
-  ADD KEY `vis_cp` (`vis_cp`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `justificatif`
---
-ALTER TABLE `justificatif`
-  MODIFY `IdJustificatif` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `lignefraishorsforfait`
---
-ALTER TABLE `lignefraishorsforfait`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
---
--- AUTO_INCREMENT pour la table `practicien`
---
-ALTER TABLE `practicien`
-  MODIFY `pra_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
---
--- AUTO_INCREMENT pour la table `rapport_visite`
---
-ALTER TABLE `rapport_visite`
-  MODIFY `rap_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=876;
---
--- AUTO_INCREMENT pour la table `rapport_visite_del`
---
-ALTER TABLE `rapport_visite_del`
-  MODIFY `rap_num_del` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1005;
---
--- AUTO_INCREMENT pour la table `visiteur_ppe3`
---
-ALTER TABLE `visiteur_ppe3`
-  MODIFY `vis_matricule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- Contraintes pour les tables exportées
+-- Contraintes pour les tables déchargées
 --
 
 --
@@ -788,9 +683,9 @@ ALTER TABLE `practicien`
 ALTER TABLE `rapport_visite`
   ADD CONSTRAINT `rapport_visite_ibfk_3` FOREIGN KEY (`med_depotlegal`) REFERENCES `medicament` (`med_depotlegal`),
   ADD CONSTRAINT `rapport_visite_ibfk_4` FOREIGN KEY (`pra_coefnotoriete`) REFERENCES `coefficient` (`pra_coefnotoriete`),
-  ADD CONSTRAINT `rapport_visite_ibfk_5` FOREIGN KEY (`rp_num`) REFERENCES `remplacant` (`rp_num`),
   ADD CONSTRAINT `rapport_visite_ibfk_6` FOREIGN KEY (`vis_matricule`) REFERENCES `visiteur_ppe3` (`vis_matricule`),
-  ADD CONSTRAINT `rapport_visite_ibfk_7` FOREIGN KEY (`pra_num`) REFERENCES `practicien` (`pra_num`);
+  ADD CONSTRAINT `rapport_visite_ibfk_7` FOREIGN KEY (`pra_num`) REFERENCES `practicien` (`pra_num`),
+  ADD CONSTRAINT `rapport_visite_ibfk_8` FOREIGN KEY (`rp_num`) REFERENCES `remplacant` (`rp_num`);
 
 --
 -- Contraintes pour la table `rapport_visite_del`
@@ -799,8 +694,9 @@ ALTER TABLE `rapport_visite_del`
   ADD CONSTRAINT `rapport_visite_del_ibfk_1` FOREIGN KEY (`med_depotlegal`) REFERENCES `medicament` (`med_depotlegal`),
   ADD CONSTRAINT `rapport_visite_del_ibfk_3` FOREIGN KEY (`del_matricule`) REFERENCES `delegue` (`del_matricule`),
   ADD CONSTRAINT `rapport_visite_del_ibfk_4` FOREIGN KEY (`pra_coefnotoriete`) REFERENCES `coefficient` (`pra_coefnotoriete`),
-  ADD CONSTRAINT `rapport_visite_del_ibfk_5` FOREIGN KEY (`rp_num`) REFERENCES `remplacant` (`rp_num`),
-  ADD CONSTRAINT `rapport_visite_del_ibfk_6` FOREIGN KEY (`pra_num`) REFERENCES `practicien` (`pra_num`);
+  ADD CONSTRAINT `rapport_visite_del_ibfk_6` FOREIGN KEY (`pra_num`) REFERENCES `practicien` (`pra_num`),
+  ADD CONSTRAINT `rapport_visite_del_ibfk_7` FOREIGN KEY (`rp_num`) REFERENCES `remplacant` (`rp_num`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -69,8 +69,8 @@
                   if ($donnees1["pra_num"] == NULL) {
                     echo $donnees2['rp_prenom'] . ' ' . $donnees2['rp_nom'];  
                   } else {
-                  echo $donnees1['pra_prenom'] . ' ' . $donnees1['pra_nom'];
-                }
+                    echo $donnees1['pra_prenom'] . ' ' . $donnees1['pra_nom'];
+                  }
                  ?></p>
                   <h5> Bilan </h5>
                   <p><?php echo $donnees['rap_bilan']; ?></p>
