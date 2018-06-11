@@ -15,9 +15,10 @@
 <?php include 'redirectConnexionResponsable.php';
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8','root','');
+}
+catch(Exception $e) {
+    die('Erreur : '.$e->getMessage());
 }
 
 if (isset($_POST['createVisiteur'])) {
@@ -70,6 +71,14 @@ if (isset($_POST['createVisiteur'])) {
         $departement = "";
     }
 
+    if (isset($_POST['secteur'])) {
+        $secteur = $_POST['secteur'];
+    } else {
+        $secteur = "";
+    }
+
+    
+
     if (!empty($_POST['vis_nom'])
         && !empty($_POST['vis_prenom'])
         && !empty($_POST['vis_adresse'])
@@ -77,7 +86,8 @@ if (isset($_POST['createVisiteur'])) {
         && !empty($_POST['vis_ville'])
         && !empty($_POST['vis_dateembauche'])
         && !empty($_POST['region'])
-        && !empty($_POST['departement'])) {
+        && !empty($_POST['departement'])
+        && !empty($_POST['secteur'])) {
         // Test si les champs ne sont pas vides
 
         $req = $bdd->prepare('INSERT INTO visiteur_ppe3(vis_nom,
@@ -87,7 +97,8 @@ if (isset($_POST['createVisiteur'])) {
                                                 vis_ville,
                                                 vis_dateembauche,
                                                 region,
-                                                departement)
+                                                departement,
+                                                secteur)
                                         VALUES(:vis_nom,
                                                 :vis_prenom,
                                                 :vis_adresse,
@@ -95,7 +106,8 @@ if (isset($_POST['createVisiteur'])) {
                                                 :vis_ville,
                                                 :vis_dateembauche,
                                                 :region,
-                                                :departement)');
+                                                :departement,
+                                                :secteur)');
         // Inserer valeurs dans la table visiteur_ppe3
 
         $req->execute(array('vis_nom' => $vis_nom,
@@ -105,7 +117,8 @@ if (isset($_POST['createVisiteur'])) {
             'vis_ville' => $vis_ville,
             'vis_dateembauche' => $vis_dateembauche,
             'region' => $region,
-            'departement' => $departement));
+            'departement' => $departement,
+            'secteur' => $secteur));
 
         echo "<script>alert(\"Le visiteur à bien été ajouté !\")</script>";
     } else {
@@ -171,6 +184,11 @@ if (isset($_POST['createVisiteur'])) {
         <div class="input-field col s12">
             <label for="departement">Département</label>
             <input type="text" id="departement" name="departement"/>
+        </div>
+
+        <div class="input-field col s12">
+            <label for="secteur">Secteur</label>
+            <input type="text" id="secteur" name="secteur"/>
         </div>
 
         <div id="button">

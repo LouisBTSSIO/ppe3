@@ -15,13 +15,12 @@
 <?php include 'redirectConnexionResponsable.php';
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8','root','');
 }
 catch(Exception $e) {
     die('Erreur : '.$e->getMessage());
 }
-$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        try {
+
 if(isset($_POST['createMedicament'])) { 
 
     if(isset($_POST['med_depotlegal']))
@@ -99,9 +98,7 @@ if(isset($_POST['createMedicament'])) {
             echo "<script>alert(\"Veuillez remplir tous les champs !\")</script>";
     }
 } 
-} catch(PDOException $e) {
-               echo $e->getMessage();
-        }
+
 ?>
 <nav>
     <div class="nav-wrapper light-blue lighten-3">

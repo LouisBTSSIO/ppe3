@@ -15,7 +15,7 @@
 <?php include 'redirectConnexionResponsable.php'; 
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8','root','');
 }
 catch(Exception $e) {
     die('Erreur : '.$e->getMessage());
@@ -50,6 +50,10 @@ $reponseResponsable = $bdd->query($sql);
 
 <td><a class="waves-effect waves-light btn green lighten-2 btn tooltipped" data-position="left" data-delay="50" data-tooltip="Ajouter un visiteur" id="ajouter" href="addVisiteurs.php"><i class="material-icons">add</i></a></td>
 
+        <div id="button2">
+        <a class="waves-effect waves-light btn" href="graph2.php">  <i class="material-icons">info</i></a>
+        </div>
+        
 <table class="highlight">
     <thead>
         <tr>
@@ -59,6 +63,7 @@ $reponseResponsable = $bdd->query($sql);
             <th>Code Postal</th>
             <th>Ville</th>
             <th>Département</th>
+            <th>Secteur</th>
             <th>Date d'embauche</th>
             <th></th>
         </tr>
@@ -79,7 +84,9 @@ while ($donnees = $reponseResponsable->fetch()) {?>
             <td class="infos"><?php echo $donnees['vis_ville']; ?></td>    
             <!-- Afficher les données de la colonne vis_ville -->  
             <td class="infos"><?php echo $donnees['departement']; ?></td>    
-            <!-- Afficher les données de la colonne département -->  
+            <!-- Afficher les données de la colonne département --> 
+            <td class="infos"><?php echo $donnees['secteur']; ?></td>    
+            <!-- Afficher les données de la colonne secteur -->   
             <td class="infos"><?php echo $donnees['vis_dateembauche']; ?></td>   
             <!-- Afficher les données de la colonne vis_dateembauche -->   
             <td><a class="waves-effect waves-light btn light-blue lighten-3 btn tooltipped" data-position="left" data-delay="50" data-tooltip="Modifier"><i class="material-icons">edit</i></a></td>

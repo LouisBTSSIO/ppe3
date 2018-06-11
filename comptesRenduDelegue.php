@@ -15,7 +15,7 @@
 <?php include 'redirectConnexionDelegue.php';
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8','root','');
 }
 catch(Exception $e) {
     die('Erreur : '.$e->getMessage());
@@ -28,9 +28,8 @@ $reponse = $bdd->query($sql);
 $sql1 = 'SELECT * FROM rapport_visite_del LEFT JOIN practicien ON practicien.pra_num = rapport_visite_del.pra_num';
     $reponse1 = $bdd->query($sql1); 
 
-$sql2 = 'SELECT * FROM rapport_visite LEFT JOIN remplacant ON remplacant.rp_num = rapport_visite_del.rp_num GROUP BY rap_num';
+$sql2 = 'SELECT * FROM rapport_visite_del LEFT JOIN remplacant ON remplacant.rp_num = rapport_visite_del.rp_num';
     $reponse2 = $bdd->query($sql2);
-
 
 ?>
 

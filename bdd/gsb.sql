@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 28 avr. 2018 à 18:49
+-- Généré le :  lun. 04 juin 2018 à 10:31
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -173,7 +173,8 @@ INSERT INTO `fichefrais` (`idVisiteur`, `mois`, `nbJustificatifs`, `montantValid
 ('a17', '201710', 0, '26034.00', '2017-10-11', 'VA', NULL),
 ('a17', '201711', 0, NULL, '2017-11-29', 'VA', NULL),
 ('a17', '201712', 0, NULL, '2017-12-06', 'CR', NULL),
-('a17', '201804', 0, NULL, '2018-04-19', 'CR', NULL);
+('a17', '201804', 0, NULL, '2018-04-19', 'CR', NULL),
+('a17', '201806', 0, NULL, '2018-06-04', 'CR', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,8 +196,8 @@ CREATE TABLE IF NOT EXISTS `fraisforfait` (
 
 INSERT INTO `fraisforfait` (`id`, `libelle`, `montant`) VALUES
 ('ETP', 'Forfait Etape', '110.00'),
-('KM', 'Frais Kilométrique', '0.62'),
-('NUI', 'Nuitée Hôtel', '80.00'),
+('KM', 'Frais Kilometrique', '0.62'),
+('NUI', 'Nuitee Hotel', '80.00'),
 ('REP', 'Repas Restaurant', '25.00');
 
 -- --------------------------------------------------------
@@ -254,7 +255,11 @@ INSERT INTO `lignefraisforfait` (`idVisiteur`, `mois`, `idFraisForfait`, `quanti
 ('a17', '201804', 'ETP', 218),
 ('a17', '201804', 'KM', 278),
 ('a17', '201804', 'NUI', 262),
-('a17', '201804', 'REP', 256);
+('a17', '201804', 'REP', 256),
+('a17', '201806', 'ETP', 1),
+('a17', '201806', 'KM', 1),
+('a17', '201806', 'NUI', 1),
+('a17', '201806', 'REP', 1);
 
 -- --------------------------------------------------------
 
@@ -273,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `lignefraishorsforfait` (
   `etat` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idVisiteur` (`idVisiteur`,`mois`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `lignefraishorsforfait`
@@ -283,10 +288,7 @@ INSERT INTO `lignefraishorsforfait` (`id`, `idVisiteur`, `mois`, `libelle`, `dat
 (6, 'a17', '201710', 'RRR', '2017-09-11', '345.00', 0),
 (7, 'a17', '201711', 'travaux', '2017-01-12', '323.00', 1),
 (8, 'a17', '201711', 'lolilol', '2017-11-25', '367.00', 0),
-(9, 'a17', '201712', 'tamere', '2017-12-12', '567.00', 1),
-(10, 'a17', '201712', 'retowallah', '2017-12-12', '3454.00', 1),
 (11, 'a17', '201701', 'libell&eacute;', '2017-12-12', '234.00', 0),
-(12, 'a17', '201801', 'prout', '2017-12-20', '4567.00', 0),
 (13, 'a17', '201801', 'V', '2017-12-20', '6969.00', 0),
 (14, 'a17', '201801', 'libelle20', '2017-12-20', '567.00', 0),
 (15, 'a17', '201801', 'LOL', '2017-12-09', '323.00', 0),
@@ -310,7 +312,8 @@ INSERT INTO `lignefraishorsforfait` (`id`, `idVisiteur`, `mois`, `libelle`, `dat
 (33, 'a17', '201804', 'addzfzbi', '2018-03-14', '15.00', 0),
 (34, 'a17', '201804', 'aeafza', '2018-04-18', '12.00', 0),
 (35, 'a17', '201804', 'Noel', '2017-12-24', '25.00', 0),
-(36, 'a17', '201804', 'aeaiheaiha', '2017-09-27', '18.00', 0);
+(36, 'a17', '201804', 'aeaiheaiha', '2017-09-27', '18.00', 0),
+(37, 'a17', '201806', 'test', '2018-06-02', '45.00', 0);
 
 -- --------------------------------------------------------
 
@@ -367,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `practicien` (
   PRIMARY KEY (`pra_num`),
   KEY `typ_code` (`typ_code`),
   KEY `pra_coefnotoriete` (`pra_coefnotoriete`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `practicien`
@@ -383,8 +386,7 @@ INSERT INTO `practicien` (`pra_num`, `pra_nom`, `pra_prenom`, `pra_adresse`, `pr
 (62, 'Mirouf', 'Patrick', '22 rue Puits Picard', 74000, 'Annecy', 2, NULL, '6'),
 (65, 'Duhamel', 'Philippe', '114 rue Authie', 34000, 'Montpellier', 4, NULL, '2'),
 (70, 'Goessens', 'Pierre', '22 rue Jean Romain', 4000, 'Mont-de-Marsan', 3, NULL, '3'),
-(80, 'Renouf', 'Sylvie', '98 boulevard Mar Lyautey', 88000, 'Epinal', 5, NULL, '8'),
-(81, 'ff', 'ff', 'ff', 55, 'ff', 5, NULL, '1');
+(80, 'Renouf', 'Sylvie', '98 boulevard Mar Lyautey', 88000, 'Epinal', 5, NULL, '8');
 
 -- --------------------------------------------------------
 
@@ -407,29 +409,26 @@ CREATE TABLE IF NOT EXISTS `rapport_visite` (
   PRIMARY KEY (`rap_num`),
   KEY `vis_matricule` (`vis_matricule`),
   KEY `pra_num` (`pra_num`),
-  KEY `med_depotlegal` (`med_depotlegal`),
+  KEY `med_depotlegal` (`med_depotlegal`(255)),
   KEY `pra_coefnotoriete` (`pra_coefnotoriete`),
   KEY `rp_num` (`rp_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=881 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=878 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `rapport_visite`
 --
 
 INSERT INTO `rapport_visite` (`rap_num`, `vis_matricule`, `pra_num`, `rp_num`, `rap_date`, `rap_bilan`, `rap_motif`, `pra_coefnotoriete`, `med_depotlegal`, `echantillon`) VALUES
-(44, 1, 35, NULL, '16 April, 2018', 'test', 'test', 5, 'APATOUX22', 5),
-(869, 1, 53, NULL, '22 April, 2018', '896', '896', 3, 'PHYSOI8', 896),
-(870, 1, 41, NULL, '5 April, 2018', 'ttt', 'ttt', 4, 'PHYSOI8', 8),
-(871, 1, 41, NULL, '30 April, 2018', 'azazaz', 'azazaz', 5, 'URIEG6', 5),
-(872, 1, 36, NULL, '29 April, 2018', 'tetetete', 'tetetetet', 5, 'APATOUX22', 8),
-(873, 1, 41, NULL, '29 April, 2018', '999', '9999', 2, 'PHYSOI8', 999999),
-(874, 1, NULL, 1, '26 April, 2018', 'test', 'test', 4, '3MYC7', 5),
-(875, 1, NULL, 1, '30 April, 2018', 'aa', 'aa', 2, '3MYC7', 5),
-(876, 1, 35, NULL, '17 April, 2018', 'sfsdfsdf', 'sdfsdfsdf', 3, 'PARMOL16', 596),
-(877, 1, NULL, 2, '22 April, 2018', 'sdfsdf', 'sdfsdfsdf99', 3, 'PHYSOI8', 789),
-(878, 1, NULL, 3, '22 April, 2018', 'mlkjhgf', 'mlkjhgf', 2, 'PARMOL16', 75),
-(879, 1, NULL, 2, '22 April, 2018', 'fghdsq', 'sqdfqsdf', 3, '3MYC7', 4),
-(880, 1, 36, NULL, '24 April, 2018', 'rdgfqs', 'sqdf', 3, 'AMOPIL7', 5);
+(44, 1, 35, 1, '16 April, 2018', 'test', 'test', 5, 'APATOUX22', 5),
+(869, 1, 53, 1, '22 April, 2018', '896', '896', 3, 'PHYSOI8', 896),
+(870, 1, 41, 1, '5 April, 2018', 'ttt', 'ttt', 4, 'PHYSOI8', 8),
+(871, 1, 41, 1, '30 April, 2018', 'azazaz', 'azazaz', 5, 'URIEG6', 5),
+(872, 1, 36, 1, '29 April, 2018', 'tetetete', 'tetetetet', 5, 'APATOUX22', 8),
+(873, 1, 41, 1, '29 April, 2018', '999', '9999', 2, 'PHYSOI8', 999999),
+(874, 1, NULL, 2, '26 April, 2018', 'test', 'test', 4, '3MYC7', 5),
+(875, 1, NULL, 3, '30 April, 2018', 'aa', 'aa', 2, '3MYC7', 5),
+(876, 1, 36, NULL, '23 April, 2018', 'annecy', 'annecy', 3, 'AMOPIL7', 5),
+(877, 1, NULL, 3, '22 April, 2018', 'lyon', 'lyon', 3, 'DIMIRTAM6', 5);
 
 -- --------------------------------------------------------
 
@@ -455,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `rapport_visite_del` (
   KEY `pra_num_del` (`pra_num`),
   KEY `pra_coefnotoriete` (`pra_coefnotoriete`),
   KEY `rp_num` (`rp_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1009 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `rapport_visite_del`
@@ -468,13 +467,10 @@ INSERT INTO `rapport_visite_del` (`rap_num_del`, `del_matricule`, `pra_num`, `rp
 (1002, '1', 36, 3, '29 April, 2018', 'jjjj', 'jjj', 1, 'URIEG6', 4),
 (1003, '1', 36, 2, '28 April, 2018', '4545', '4545', 4, 'URIEG6', 4545),
 (1004, '1', NULL, 3, '18 April, 2018', 'oo', 'oo', 4, '3MYC7', 1),
-(1005, '1', NULL, 2, '22 April, 2018', '98pmmpmpm', 'pmpmpmp', 3, 'PHYSOI8', 4),
-(1006, '1', 35, NULL, '29 April, 2018', 'pmpmpmpmpmpmpmpm', 'pmpmmpm', 2, 'EVILR7', 4),
-(1007, '1', 35, NULL, '23 April, 2018', 'qwqwqwqw', 'wqqwqw', 2, '3MYC7', 5),
-(1008, '1', 35, NULL, '23 April, 2018', 'azazaza', 'aaaaaa', 1, '3MYC7', 8),
-(1009, '1', NULL, 2, '22 April, 2018', 'ghghghgh', 'ghghghghghg', 1, '3MYC7', 5),
-(1010, '1', NULL, 3, '16 April, 2018', 'ikkikiki', 'kikikik', 3, 'PHYSOI8', 5),
-(1011, '1', NULL, 3, '22 April, 2018', 'fzfzfzf', 'zefzefzef', 4, 'PARMOL16', 6);
+(1005, '1', 41, NULL, '22 April, 2018', 'annecy', 'annecy', 3, 'INSXT5', 5),
+(1006, '1', NULL, 2, '22 April, 2018', 'lyon', 'lyon', 3, 'INSXT5', 5),
+(1007, '1', 36, NULL, '22 April, 2018', 'test', 'test', 4, 'INSXT5', 5),
+(1008, '1', NULL, 2, '11 April, 2018', 'aa', 'aa', 2, '3MYC7', 5);
 
 -- --------------------------------------------------------
 
@@ -484,14 +480,14 @@ INSERT INTO `rapport_visite_del` (`rap_num_del`, `del_matricule`, `pra_num`, `rp
 
 DROP TABLE IF EXISTS `remplacant`;
 CREATE TABLE IF NOT EXISTS `remplacant` (
-  `rp_num` int(11) NOT NULL AUTO_INCREMENT,
+  `rp_num` int(11) NOT NULL,
   `rp_nom` varchar(250) NOT NULL,
   `rp_prenom` varchar(250) NOT NULL,
   `rp_adresse` varchar(250) NOT NULL,
   `rp_cp` int(11) NOT NULL,
   `rp_ville` varchar(250) NOT NULL,
   PRIMARY KEY (`rp_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `remplacant`
@@ -642,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `visiteur_ppe3` (
   `vis_dateembauche` varchar(255) NOT NULL,
   PRIMARY KEY (`vis_matricule`),
   KEY `vis_cp` (`vis_cp`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `visiteur_ppe3`
@@ -658,7 +654,8 @@ INSERT INTO `visiteur_ppe3` (`vis_matricule`, `vis_nom`, `vis_prenom`, `vis_adre
 (7, 'Cacheux', 'Bernard', '114 rue Authie', '34', 'Montpellier', 'Occitanie', 'Hérault', 'Sud', '1998-01-08'),
 (8, 'Cadic', 'Eric', '123 rue Caponière', '41', 'Blois', 'Centre-Val de Loire', 'Loir et Cher', 'Paris Centre', '2018-03-02'),
 (9, 'Quiquandon', 'Joël', '7 rue Ernest Renan', '29', 'Quimper', 'Bretagne', 'Finistère', 'Ouest', '2006-03-14'),
-(10, 'Onfroy', 'Den', '5 rue Sidonie Jacolin', '37', 'Tours', 'Centre-Val de Loire', 'Indre et Loire', 'Paris Centre', '1989-02-14');
+(10, 'Onfroy', 'Den', '5 rue Sidonie Jacolin', '37', 'Tours', 'Centre-Val de Loire', 'Indre et Loire', 'Paris Centre', '1989-02-14'),
+(12, 'vv', 'vv', 'vv', '10', 'vv', 'vv', 'vv', 'Est', '22 April, 2018');
 
 --
 -- Contraintes pour les tables déchargées
@@ -676,26 +673,6 @@ ALTER TABLE `medicament`
 ALTER TABLE `practicien`
   ADD CONSTRAINT `practicien_ibfk_1` FOREIGN KEY (`typ_code`) REFERENCES `type_practicien` (`typ_code`),
   ADD CONSTRAINT `practicien_ibfk_2` FOREIGN KEY (`pra_coefnotoriete`) REFERENCES `coefficient` (`pra_coefnotoriete`);
-
---
--- Contraintes pour la table `rapport_visite`
---
-ALTER TABLE `rapport_visite`
-  ADD CONSTRAINT `rapport_visite_ibfk_3` FOREIGN KEY (`med_depotlegal`) REFERENCES `medicament` (`med_depotlegal`),
-  ADD CONSTRAINT `rapport_visite_ibfk_4` FOREIGN KEY (`pra_coefnotoriete`) REFERENCES `coefficient` (`pra_coefnotoriete`),
-  ADD CONSTRAINT `rapport_visite_ibfk_6` FOREIGN KEY (`vis_matricule`) REFERENCES `visiteur_ppe3` (`vis_matricule`),
-  ADD CONSTRAINT `rapport_visite_ibfk_7` FOREIGN KEY (`pra_num`) REFERENCES `practicien` (`pra_num`),
-  ADD CONSTRAINT `rapport_visite_ibfk_8` FOREIGN KEY (`rp_num`) REFERENCES `remplacant` (`rp_num`);
-
---
--- Contraintes pour la table `rapport_visite_del`
---
-ALTER TABLE `rapport_visite_del`
-  ADD CONSTRAINT `rapport_visite_del_ibfk_1` FOREIGN KEY (`med_depotlegal`) REFERENCES `medicament` (`med_depotlegal`),
-  ADD CONSTRAINT `rapport_visite_del_ibfk_3` FOREIGN KEY (`del_matricule`) REFERENCES `delegue` (`del_matricule`),
-  ADD CONSTRAINT `rapport_visite_del_ibfk_4` FOREIGN KEY (`pra_coefnotoriete`) REFERENCES `coefficient` (`pra_coefnotoriete`),
-  ADD CONSTRAINT `rapport_visite_del_ibfk_6` FOREIGN KEY (`pra_num`) REFERENCES `practicien` (`pra_num`),
-  ADD CONSTRAINT `rapport_visite_del_ibfk_7` FOREIGN KEY (`rp_num`) REFERENCES `remplacant` (`rp_num`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

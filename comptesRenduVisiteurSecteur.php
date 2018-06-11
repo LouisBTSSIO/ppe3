@@ -14,9 +14,10 @@
 <?php include 'redirectConnexionResponsable.php';
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8','root','');
+}
+catch(Exception $e) {
+    die('Erreur : '.$e->getMessage());
 }
 
 $sql = "SELECT * FROM visiteur_ppe3"; // Récupérer toutes les données de la table visiteur
@@ -64,9 +65,7 @@ for ($i = 0; $i < $test; $i++) {
         </div>
 
         
-        <div id="button2">
-        <a class="waves-effect waves-light btn" href="graph2.php">  <i class="material-icons">info</i></a>
-        </div>
+
 
   </form>
 

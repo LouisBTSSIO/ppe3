@@ -15,7 +15,7 @@
 <?php include 'redirectConnexionDelegue.php';
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8','root','');
 }
 catch(Exception $e) {
     die('Erreur : '.$e->getMessage());
@@ -38,6 +38,10 @@ $reponseDelegue = $bdd->query($sql);
 </nav>
 
 <h1 class="center"> Liste des visiteurs </h1>
+
+        <div id="button2">
+        <a class="waves-effect waves-light btn" href="graph.php">  <i class="material-icons">info</i></a>
+        </div>
 
 <table class="highlight">
     <thead>
